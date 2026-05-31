@@ -1,0 +1,47 @@
+Neovim
+- Enabled true color in ~/.config/nvim/init.lua:
+- Replaced notermguicolors with vim.opt.termguicolors = true.
+- This was necessary because neon/fire colors need full RGB color support.
+- Reworked ~/.config/nvim/lua/plugins/theme.lua:
+- Made ayu-dark the primary theme.
+- Added custom highlight overrides for:
+- metal-gray editor background
+- orange cursor line and line numbers
+- fire-colored keywords, strings, functions, diagnostics, search, popup menu, borders
+- Kept your other themes installed: Catppuccin, Rose Pine, Gruvbox, Gruber Darker.
+- Added ~/.config/nvim/lua/plugins/cursor.lua:
+- Installed/configured gen740/SmoothCursor.nvim.
+- Set it to autostart.
+- Gave it orange/red/yellow fire trail colors.
+- Enabled fancy trail mode so cursor movement has a visible animated flame-like tail.
+- Ran Lazy sync:
+- This installed SmoothCursor.nvim.
+- lazy-lock.json was updated with the plugin commit.
+Ghostty
+- Updated ~/.config/ghostty/config:
+- Set background to metal gray: #1F2328.
+- Set foreground to warm fire text: #FFD7A3.
+- Set cursor to neon orange: #FF6A00.
+- Replaced the old cyan/mint palette with orange/red/yellow fire ANSI colors.
+- Kept the custom cursor shader enabled.
+- Updated ~/Library/Application Support/com.mitchellh.ghostty/config too:
+- Ghostty was reading config from both locations.
+- I mirrored the color palette there so both paths agree.
+- I disabled the duplicate shader there so Ghostty only loads one cursor shader.
+- Updated ~/.config/ghostty/cursor_smooth.glsl:
+- Changed the trail color from cursor/cyan-based to orange/fire.
+- Increased trail duration/smear slightly.
+- Enabled fade so the cursor trail feels smoother.
+- Fixed a shader bug where effectiveBlur was redeclared inside an if, so the adjusted blur value was not actually used.
+Why the Animation Was Not Working
+- Neovim smooth cursor was not configured at all: there was no SmoothCursor plugin spec in your active Lazy plugin files.
+- Neovim true color was disabled, so even if colors loaded, they would not render as intended.
+- Ghostty had two custom-shader entries because it was loading both config paths. That can make the cursor shader unreliable or visually muddy.
+- The Ghostty shader had a small GLSL scoping bug around effectiveBlur.
+Verification
+- Ran nvim --headless '+Lazy! sync' +qa to install/sync plugins.
+- Ran a Neovim headless check loading ayu-dark and smoothcursor.
+- Ran ghostty +show-config and confirmed:
+- background is #1f2328
+- fire palette is active
+- only one custom-shader is active.

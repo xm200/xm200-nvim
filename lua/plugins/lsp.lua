@@ -27,7 +27,7 @@ return {
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			ensure_installed = {
-				"lua_ls", "pyright", "clangd"
+				"lua_ls", "pyright", "clangd", "gopls", "html", "cssls", "rust_analyzer"
 			},
 			handlers = {
 				function(server_name) -- default handler (optional)
@@ -46,30 +46,29 @@ return {
 						end,
 					})
 				end,
-
-    ["pyright"] = function ()
-        require("lspconfig").pyright.setup({
-                settings = {
-                    python = {
-                            disableLanguageServices = false,
-                            analysis = {
-                                autoSearchPaths = true,
-                                diagnosticMode = "workspace",
-                                useLibraryCodeForTypes = true,
-                                loglevel = "Trace",
-                                typecheckingmode = "strict",
-                                autoImportCompletions = true
-                            }
-                    }
-                },
-                on_attach = function (client, bufnr)
-                local buf_ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-                if buf_ft == "proto" then
-                        client.stop()
-                end
-            end
-        })
-    end,
+				["pyright"] = function ()
+		        	require("lspconfig").pyright.setup({
+        	        		settings = {
+	        	        	    python = {
+        			                    disableLanguageServices = false,
+	        	        	            analysis = {
+                        			        autoSearchPaths = true,
+                	        	        	diagnosticMode = "workspace",
+	        	                        	useLibraryCodeForTypes = true,
+			                                loglevel = "Trace",
+        		                        	typecheckingmode = "basic",
+                		        	        autoImportCompletions = true
+                			            }
+	        	            	    }
+		                	},
+                			on_attach = function (client, bufnr)
+        		        		local buf_ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+				                if buf_ft == "proto" then
+        		                		client.stop()
+                				end
+	            			end
+        				})
+			    	end,
 
 				["lua_ls"] = function()
 					local lspconfig = require("lspconfig")
@@ -97,6 +96,74 @@ return {
 						end,
 					})
 				end,
+				["gopls"] = function ()
+					local lspconfig = require("lspconfig")
+					lspconfig.gopls.setup({
+						capabilities = capabilities,
+	    					settings = {
+	      						gopls = {
+		      						experimentalPostfixCompletions = true,
+		      						analyses = {
+		        						unusedparams = true,
+		        						shadow = true,
+		     						},
+		     						staticcheck = true,
+		   					},
+	    					},
+						on_attach = function(client, bufnr)
+							local buf_ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+							if buf_ft == "proto" then
+								client.stop()
+							end
+						end,
+
+					})
+				end,
+				["html"] = function ()
+					local lspconfig = require("lspconfig")
+					lspconfig.html.setup({
+						settings = {}
+					})
+					on_attach = function (client, bufnr)
+						local buf_ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+						if buf_ft == "proto" then
+							client.stop()
+						end
+					end
+				end,
+				["rust-analyzer"] = function()
+  local lspconfig = require("lspconfig")
+  lspconfig.rust_analyzer.setup({
+    settings = {
+      ["rust-analyzer"] = {
+        checkOnSave = {
+          command = "clippy",  -- Run clippy to check for errors
+        },
+        cargo = {
+          allFeatures = true,  -- Enable all features in Cargo.toml
+        },
+        procMacro = {
+          enable = true,  -- Enable procedural macros
+        },
+        inlayHints = {
+          enable = true,  -- Enable inlay hints
+          chainingHints = true,  -- Enable chaining hints (e.g., function calls)
+          parameterHints = true,  -- Enable parameter hints
+        },
+        lens = {
+          enable = true,  -- Enable code lenses (e.g., go to definition, run tests)
+        },
+        diagnostics = {
+          enable = true,  -- Enable diagnostics for errors/warnings
+        },
+      },
+    },
+    on_attach = function(client, bufnr)
+      -- Custom on_attach for rust-analyzer
+      -- For example, you can set key mappings or auto-format options here
+    end,
+  })
+end
 			},
 		})
 
@@ -142,6 +209,10 @@ return {
 				header = "",
 				prefix = "",
 			},
+			virtual_text = {
+   				 -- source = "always",  -- Or "if_many"
+   				 prefix = '●', -- Could be '■', '▎', 'x'
+  			},
 		})
 	end,
 }

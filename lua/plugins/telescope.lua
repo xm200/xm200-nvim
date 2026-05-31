@@ -4,6 +4,7 @@ return {
  dependencies = {
   "nvim-lua/plenary.nvim",
   "nvim-telescope/telescope-ui-select.nvim",
+  "nvim-telescope/telescope-file-browser.nvim",
  },
 
  config = function()
@@ -11,6 +12,9 @@ return {
    extensions = {
     ["ui-select"] = {
      require("telescope.themes").get_dropdown({}),
+    },
+    file_browser = {
+	theme = "dropdown",
     },
     fzf = {
      fuzzy = true,
@@ -34,7 +38,7 @@ return {
   vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
   vim.keymap.set("n", "<leader>pb", builtin.buffers, {})
   vim.keymap.set("n", "<C-p>", builtin.git_files, {})
-
+  vim.keymap.set("n", "<leader>fb", ":Telescope file_browser", {})
   vim.keymap.set("n", "<leader>pc", builtin.colorscheme, {})
 
   vim.keymap.set("n", "<leader>pws", function()
