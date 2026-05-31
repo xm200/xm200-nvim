@@ -1,0 +1,113 @@
+# This is the configuration file for Ghostty.
+#
+# This template file has been automatically created at the following
+# path since Ghostty couldn't find any existing config files on your system:
+#
+#   /Users/infer0/Library/Application Support/com.mitchellh.ghostty/config
+#
+# The template does not set any default options, since Ghostty ships
+# with sensible defaults for all options. Users should only need to set
+# options that they want to change from the default.
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+#
+# Ghostty can reload the configuration while running by using the menu
+# options or the bound key (default: Command + Shift + comma on macOS and
+# Control + Shift + comma on other platforms). Not all config options can be
+# reloaded while running; some only apply to new windows and others may require
+# a full restart to take effect.
+
+# Shell config
+command = /opt/homebrew/bin/tmux
+
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# font-family = Iosevka
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+#background = #0b0e14
+#foreground = #bfbdb6
+#selection-background = #1b3a5b
+#selection-foreground = #bfbdb6
+#cursor-color = #bfbdb6
+#cursor-text = #0b0e14
+#palette = 0=#1e232b
+#palette = 1=#ea6c73
+#palette = 2=#7fd962
+#palette = 3=#f9af4f
+#palette = 4=#53bdfa
+#palette = 5=#cda1fa
+#palette = 6=#90e1c6
+#palette = 7=#c7c7c7
+#palette = 8=#686868
+#palette = 9=#f07178
+#palette = 10=#aad94c
+#palette = 11=#ffb454
+#palette = 12=#59c2ff
+#palette = 13=#d2a6ff
+#palette = 14=#95e6cb
+#palette = 15=#ffffff
+
+# --- neon fire base ---
+background = #121417
+background-opacity = 0.85
+
+foreground = #FFD7A3
+cursor-color = #FF6A00
+cursor-text = #121417
+selection-background = #4A1A00
+selection-foreground = #FFE7C2
+
+bold-is-bright = false
+
+# --- ANSI 16-color palette (0-7 normal, 8-15 bright) ---
+palette = 0=#121417
+palette = 1=#FF2A00
+palette = 2=#FF7A00
+palette = 3=#FFB000
+palette = 4=#FF5A00
+palette = 5=#FF3D00
+palette = 6=#FF8C1A
+palette = 7=#FFD7A3
+palette = 8=#3A1200
+palette = 9=#FF4D00
+palette = 10=#FF8C1A
+palette = 11=#FFD166
+palette = 12=#FF6A00
+palette = 13=#FF7A33
+palette = 14=#FFC04D
+palette = 15=#FFE7C2
+
+# --- colorscheme ---
+
+# --- smooth cursor movement ---
+# Ghostty does not have a native cursor-slide option yet; this shader draws
+# a short fire trail between cursor positions to make jumps feel smoother.
+custom-shader = cursor_smooth.glsl
+custom-shader-animation = true
